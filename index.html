@@ -3,545 +3,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website Landscape Viewer</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Landscape Web Viewer</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
-            background: linear-gradient(135deg, #1a2980, #26d0ce);
-            color: #fff;
-            min-height: 100vh;
-            padding: 20px;
-            overflow-x: hidden;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-        
-        header {
-            text-align: center;
-            padding: 40px 20px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            margin-top: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-        
-        h1 {
-            font-size: 3.2rem;
-            margin-bottom: 15px;
-            background: linear-gradient(to right, #ff7e5f, #feb47b);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-        
-        .subtitle {
-            font-size: 1.4rem;
-            opacity: 0.9;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .url-input-container {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 20px;
-            padding: 40px;
-            backdrop-filter: blur(10px);
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-        
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        label {
-            font-size: 1.2rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .input-wrapper {
-            display: flex;
-            gap: 15px;
-        }
-        
-        input[type="text"] {
-            flex: 1;
-            padding: 18px 25px;
-            border: none;
-            border-radius: 15px;
-            font-size: 1.1rem;
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s;
-        }
-        
-        input[type="text"]:focus {
-            outline: none;
-            border-color: #ff7e5f;
-            background: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 0 4px rgba(255, 126, 95, 0.2);
-        }
-        
-        input[type="text"]::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-        }
-        
-        button {
-            background: linear-gradient(to right, #ff7e5f, #feb47b);
-            color: white;
-            border: none;
-            padding: 18px 35px;
-            border-radius: 15px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-        }
-        
-        button:active {
-            transform: translateY(1px);
-        }
-        
-        .preview-container {
-            display: none;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 20px;
-            padding: 30px;
-            backdrop-filter: blur(10px);
-            flex-direction: column;
-            gap: 25px;
-            position: relative;
-            min-height: 600px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-        
-        .preview-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-        }
-        
-        .preview-title {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 1.5rem;
-        }
-        
-        .controls {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .control-btn {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s;
-        }
-        
-        .control-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
-        }
-        
-        .preview-frame-container {
-            position: relative;
-            width: 100%;
-            height: 500px;
-            border-radius: 15px;
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
             overflow: hidden;
-            background: #000;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
-        .preview-frame {
-            width: 100%;
-            height: 100%;
+
+        .controls {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+            color: white;
+        }
+
+        .controls input[type="url"] {
+            width: 300px;
+            padding: 5px;
+            margin-right: 10px;
             border: none;
-            background: white;
+            border-radius: 3px;
         }
-        
-        .loading {
+
+        .controls button {
+            padding: 5px 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .controls button:hover {
+            background: #0056b3;
+        }
+
+        .iframe-container {
             position: absolute;
             top: 0;
             left: 0;
+            width: 100vh;
+            height: 100vw;
+            transform-origin: top left;
+            transform: rotate(90deg) translateY(-100%);
+            overflow: hidden;
+        }
+
+        #webFrame {
             width: 100%;
             height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 10;
-        }
-        
-        .spinner {
-            width: 60px;
-            height: 60px;
-            border: 5px solid rgba(255, 126, 95, 0.3);
-            border-top: 5px solid #ff7e5f;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .info-panel {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 20px;
-        }
-        
-        .info-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 25px;
-            backdrop-filter: blur(5px);
-        }
-        
-        .info-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            color: #ff7e5f;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .info-card ul {
-            padding-left: 20px;
-        }
-        
-        .info-card li {
-            margin-bottom: 12px;
-            line-height: 1.6;
-        }
-        
-        /* FIXED LANDSCAPE MODE */
-        #landscape-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            z-index: 1000;
-            background: white;
-            display: none;
-        }
-        
-        #landscape-frame {
-        width: 100vh;
-        height: 100vw;
-        border: none;
-        transform: rotate(90deg);
-        transform-origin: bottom left;
-        position: absolute;
-        top: -100vw;
-        left: 0;
-        }
-        
-        .close-landscape {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #ff4b4b;
-            color: white;
             border: none;
-            padding: 15px 25px;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 1001;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            background: white;
+        }
+
+        /* Styles to inject into the iframe */
+        .injected-styles {
             display: none;
-        }
-        
-        footer {
-            text-align: center;
-            padding: 30px;
-            margin-top: 40px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 20px;
-            font-size: 1rem;
-            opacity: 0.9;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-        
-        @media (max-width: 768px) {
-            .input-wrapper {
-                flex-direction: column;
-            }
-            
-            h1 {
-                font-size: 2.4rem;
-            }
-            
-            .subtitle {
-                font-size: 1.1rem;
-            }
-            
-            .preview-header {
-                flex-direction: column;
-                gap: 15px;
-                align-items: flex-start;
-            }
-            
-            .controls {
-                width: 100%;
-                justify-content: space-between;
-            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Website Landscape Viewer</h1>
-            <p class="subtitle">Enter any website URL below to view it in 90° landscape orientation</p>
-        </header>
-        
-        <div class="url-input-container">
-            <div class="input-group">
-                <label for="websiteUrl">
-                    <i class="fas fa-globe"></i> Enter Website URL
-                </label>
-                <div class="input-wrapper">
-                    <input type="text" id="websiteUrl" placeholder="https://example.com" value="https://en.wikipedia.org">
-                    <button id="viewBtn">
-                        <i class="fas fa-eye"></i> View Website
-                    </button>
-                </div>
-            </div>
-            
-            <div class="input-group">
-                <label>
-                    <i class="fas fa-lightbulb"></i> Pro Tips:
-                </label>
-                <ul>
-                    <li>Include "https://" or "http://" at the beginning</li>
-                    <li>Try responsive sites for best results</li>
-                    <li>Use the landscape button for 90° rotation</li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="preview-container" id="previewContainer">
-            <div class="preview-header">
-                <div class="preview-title">
-                    <i class="fas fa-window-restore"></i>
-                    <span id="previewTitle">Website Preview</span>
-                </div>
-                <div class="controls">
-                    <button class="control-btn" id="rotateBtn">
-                        <i class="fas fa-rotate"></i> View in Landscape
-                    </button>
-                    <button class="control-btn" id="reloadBtn">
-                        <i class="fas fa-sync-alt"></i> Reload
-                    </button>
-                </div>
-            </div>
-            
-            <div class="preview-frame-container">
-                <div class="loading" id="loading">
-                    <div class="spinner"></div>
-                    <p>Loading website content...</p>
-                </div>
-                <iframe class="preview-frame" id="previewFrame" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
-            </div>
-            
-            <div class="info-panel">
-                <div class="info-card">
-                    <h3><i class="fas fa-check-circle"></i> Supported Websites</h3>
-                    <ul>
-                        <li>Wikipedia, news sites, and blogs</li>
-                        <li>Documentation and educational sites</li>
-                        <li>Most public information websites</li>
-                        <li>Portfolio and business sites</li>
-                    </ul>
-                </div>
-                
-                <div class="info-card">
-                    <h3><i class="fas fa-exclamation-triangle"></i> Limitations</h3>
-                    <ul>
-                        <li>Sites with strict X-Frame-Options</li>
-                        <li>Secure sites (banking, private accounts)</li>
-                        <li>Sites with Content Security Policies</li>
-                        <li>Complex web applications</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        
-        <footer>
-            <p>Note: This tool is for educational purposes. Rotation works for most public websites.</p>
-            <p>© 2023 Website Landscape Viewer | Proper 90° Rotation</p>
-        </footer>
+    <div class="controls">
+        <input type="url" id="urlInput" placeholder="Enter website URL (e.g., https://example.com)" />
+        <button onclick="loadWebsite()">Load</button>
+        <button onclick="toggleRotation()">Toggle Rotation</button>
     </div>
-    
-    <!-- Landscape container -->
-    <div id="landscape-container">
-        <iframe id="landscape-frame"></iframe>
+
+    <div class="iframe-container" id="iframeContainer">
+        <iframe id="webFrame" src="about:blank"></iframe>
     </div>
-    
-    <!-- Close landscape button -->
-    <button class="close-landscape" id="closeLandscape">
-        <i class="fas fa-times"></i> Exit Landscape
-    </button>
-    
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const viewBtn = document.getElementById('viewBtn');
-            const websiteUrl = document.getElementById('websiteUrl');
-            const previewContainer = document.getElementById('previewContainer');
-            const previewFrame = document.getElementById('previewFrame');
-            const previewTitle = document.getElementById('previewTitle');
-            const rotateBtn = document.getElementById('rotateBtn');
-            const reloadBtn = document.getElementById('reloadBtn');
-            const loading = document.getElementById('loading');
-            const landscapeContainer = document.getElementById('landscape-container');
-            const landscapeFrame = document.getElementById('landscape-frame');
-            const closeLandscape = document.getElementById('closeLandscape');
-            
-            // Function to validate and format URL
-            function formatUrl(url) {
-                if (!url) return null;
-                
-                // Add https:// if missing
-                if (!url.startsWith('http://') && !url.startsWith('https://')) {
-                    return 'https://' + url;
-                }
-                
-                return url;
+        let isRotated = true;
+
+        function loadWebsite() {
+            const url = document.getElementById('urlInput').value;
+            if (!url) {
+                alert('Please enter a valid URL');
+                return;
             }
+
+            // Add protocol if missing
+            const fullUrl = url.startsWith('http') ? url : 'https://' + url;
             
-            // View website in preview frame
-            viewBtn.addEventListener('click', function() {
-                const url = formatUrl(websiteUrl.value);
+            const iframe = document.getElementById('webFrame');
+            iframe.src = fullUrl;
+
+            // Wait for iframe to load then inject styles
+            iframe.onload = function() {
+                injectStyles();
+            };
+        }
+
+        function injectStyles() {
+            const iframe = document.getElementById('webFrame');
+            try {
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
                 
-                if (!url) {
-                    alert('Please enter a valid website URL');
-                    return;
-                }
+                // Create style element
+                const style = iframeDoc.createElement('style');
+                style.textContent = `
+                    /* Disable all images */
+                    img, picture, svg, video, canvas, embed, object {
+                        display: none !important;
+                        visibility: hidden !important;
+                    }
+
+                    /* Disable all animations and transitions */
+                    *, *::before, *::after {
+                        animation-duration: 0s !important;
+                        animation-delay: 0s !important;
+                        transition-duration: 0s !important;
+                        transition-delay: 0s !important;
+                        transform: none !important;
+                    }
+
+                    /* Scale fonts for landscape viewing */
+                    body, html {
+                        font-size: 16px !important;
+                        line-height: 1.4 !important;
+                        overflow-x: auto !important;
+                    }
+
+                    /* Adjust text elements */
+                    h1 { font-size: 2.5em !important; }
+                    h2 { font-size: 2em !important; }
+                    h3 { font-size: 1.5em !important; }
+                    h4 { font-size: 1.25em !important; }
+                    h5 { font-size: 1.1em !important; }
+                    h6 { font-size: 1em !important; }
+                    
+                    p, div, span, a, li, td, th {
+                        font-size: 1em !important;
+                        line-height: 1.4 !important;
+                    }
+
+                    /* Remove background images */
+                    * {
+                        background-image: none !important;
+                    }
+
+                    /* Ensure content is readable */
+                    body {
+                        background-color: white !important;
+                        color: black !important;
+                        max-width: none !important;
+                        width: auto !important;
+                    }
+
+                    /* Remove fixed positioning that might interfere */
+                    * {
+                        position: static !important;
+                    }
+
+                    /* Ensure links are visible */
+                    a {
+                        color: #0066cc !important;
+                        text-decoration: underline !important;
+                    }
+
+                    /* Remove shadows and effects */
+                    * {
+                        box-shadow: none !important;
+                        text-shadow: none !important;
+                        filter: none !important;
+                    }
+                `;
+
+                // Inject the styles
+                iframeDoc.head.appendChild(style);
                 
-                try {
-                    // Validate URL format
-                    new URL(url);
-                } catch (e) {
-                    alert('Please enter a valid website URL');
-                    return;
-                }
-                
-                // Show loading indicator
-                loading.style.display = 'flex';
-                previewContainer.style.display = 'flex';
-                
-                // Set iframe source
-                previewFrame.src = url;
-                previewTitle.textContent = new URL(url).hostname;
-                
-                // Scroll to preview
-                previewContainer.scrollIntoView({ behavior: 'smooth' });
-            });
-            
-            // Reload website
-            reloadBtn.addEventListener('click', function() {
-                if (previewFrame.src) {
-                    loading.style.display = 'flex';
-                    previewFrame.src = previewFrame.src;
-                }
-            });
-            
-            // View in landscape mode
-            rotateBtn.addEventListener('click', function() {
-                if (!previewFrame.src) {
-                    alert('Please load a website first');
-                    return;
-                }
-                
-                // Show landscape container
-                landscapeContainer.style.display = 'block';
-                closeLandscape.style.display = 'flex';
-                
-                // Set landscape iframe source
-                landscapeFrame.src = previewFrame.src;
-                
-                // Hide scrollbars on body when in landscape mode
-                document.body.style.overflow = 'hidden';
-            });
-            
-            // Close landscape view
-            closeLandscape.addEventListener('click', function() {
-                landscapeContainer.style.display = 'none';
-                closeLandscape.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            });
-            
-            // Hide loading when iframe loads
-            previewFrame.addEventListener('load', function() {
-                loading.style.display = 'none';
-            });
-            
-            // Handle Enter key in URL input
-            websiteUrl.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    viewBtn.click();
-                }
-            });
+            } catch (e) {
+                console.log('Cannot inject styles due to CORS policy. The page will still rotate but styles may not apply.');
+            }
+        }
+
+        function toggleRotation() {
+            const container = document.getElementById('iframeContainer');
+            if (isRotated) {
+                container.style.transform = 'none';
+                container.style.width = '100vw';
+                container.style.height = '100vh';
+                isRotated = false;
+            } else {
+                container.style.transform = 'rotate(90deg) translateY(-100%)';
+                container.style.width = '100vh';
+                container.style.height = '100vw';
+                isRotated = true;
+            }
+        }
+
+        // Handle keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'r' || e.key === 'R') {
+                toggleRotation();
+            }
         });
+
+        // Load a default page
+        window.onload = function() {
+            document.getElementById('urlInput').value = 'example.com';
+        };
     </script>
 </body>
 </html>
